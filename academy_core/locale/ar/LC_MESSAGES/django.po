@@ -1,0 +1,242 @@
+# Arabic translations for academy_core.
+# This file is distributed under the same license as the academy_ecommerce project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: academy_ecommerce\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-21 18:29+0300\n"
+"PO-Revision-Date: 2026-09-21 00:00+0300\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: academy_core/templates/base.html:10
+msgid "Intex Store"
+msgstr "متجر الأكاديمية"
+
+#: academy_core/templates/cart.html:61
+msgid "Your cart is empty"
+msgstr "سلة الشراء فارغة"
+
+#: academy_core/templates/cart.html:75
+#: academy_core/templates/emails/order.html:139
+msgid "Price"
+msgstr "السعر"
+
+#: academy_core/templates/cart.html:79
+#: academy_core/templates/emails/order.html:178
+msgid "Total"
+msgstr "الإجمالي"
+
+#: academy_core/templates/cart.html:86
+msgid "Processed to checkout"
+msgstr "الانتقال إلى الدفع"
+
+#: academy_core/templates/category.html:16
+msgid "All courses"
+msgstr "كل الدورات"
+
+#: academy_core/templates/category.html:37
+#: academy_core/templates/user_courses.html:25
+msgid "We were not able to find any book."
+msgstr "لم نتمكن من العثور على أي كتاب."
+
+#: academy_core/templates/category.html:48
+#: academy_core/templates/category.html:52
+#: academy_core/templates/user_courses.html:36
+#: academy_core/templates/user_courses.html:40
+msgid "Previous"
+msgstr "السابق"
+
+#: academy_core/templates/category.html:57
+#: academy_core/templates/category.html:61
+#: academy_core/templates/user_courses.html:45
+#: academy_core/templates/user_courses.html:49
+msgid "Next"
+msgstr "التالي"
+
+#: academy_core/templates/checkout-complete.html:13
+msgid ""
+"Your purchase was completed successfully, an email with the download links "
+"for the books you ordered is on its way!"
+msgstr ""
+"تم إتمام عملية الشراء بنجاح، وسيصلك بريد إلكتروني يحتوي على روابط تحميل "
+"الكتب التي طلبتها!"
+
+#: academy_core/templates/checkout-complete.html:16
+msgid "Back to home page"
+msgstr "العودة إلى الصفحة الرئيسية"
+
+#: academy_core/templates/common/page_title.html:2
+msgid "{{ title }}"
+msgstr ""
+
+#: academy_core/templates/course_show.html:47
+msgid "Course Content"
+msgstr "محتوى الدورة"
+
+#: academy_core/templates/course_show.html:51
+msgid "Explore all tracks included in this course."
+msgstr "استكشف جميع المسارات المتضمنة في هذه الدورة."
+
+#: academy_core/templates/course_show.html:184
+msgid "No lessons available yet."
+msgstr "لا توجد دروس متاحة حتى الآن."
+
+#: academy_core/templates/course_show.html:198
+msgid "No sections available."
+msgstr "لا توجد أقسام متاحة."
+
+#: academy_core/templates/course_show.html:217
+msgid "No tracks available."
+msgstr "لا توجد مسارات متاحة."
+
+#: academy_core/templates/course_show.html:221
+msgid "This course does not have any content yet."
+msgstr "لا يحتوي هذا الكورس على أي محتوى حتى الآن."
+
+#: academy_core/templates/emails/order.html:50
+msgid "App Name"
+msgstr "اسم التطبيق"
+
+#: academy_core/templates/emails/order.html:60
+msgid "Customer"
+msgstr "العميل"
+
+#: academy_core/templates/emails/order.html:74
+msgid "Order"
+msgstr "الطلب"
+
+#: academy_core/templates/emails/order.html:88
+msgid "Date"
+msgstr "التاريخ"
+
+#: academy_core/templates/emails/order.html:128
+msgid "Book"
+msgstr "الكتاب"
+
+#: academy_core/templates/lesson.html:34
+msgid "Your browser does not support playing this video."
+msgstr "متصفحك لا يدعم تشغيل هذا الفيديو."
+
+#: academy_core/templates/lesson.html:519
+msgid "An error occurred while fetching the response."
+msgstr "حدث خطأ أثناء جلب الرد."
+
+#: academy_core/templates/partials/footer.html:5
+msgid "© 2026 pools store All rights reserved."
+msgstr "© 2026 الأكاديمية. جميع الحقوق محفوظة."
+
+#: academy_core/templates/partials/header.html:608
+#: academy_core/templates/partials/header.html:610
+msgid "Academy logo"
+msgstr "شعار الأكاديمية"
+
+#: academy_core/templates/partials/header.html:631
+msgid "Collapse sidebar"
+msgstr "طي الشريط الجانبي"
+
+#: academy_core/templates/partials/header.html:651
+msgid "Home"
+msgstr "الرئيسية"
+
+#: academy_core/templates/partials/header.html:658
+msgid "Navigation"
+msgstr "التنقل"
+
+#: academy_core/templates/partials/header.html:682
+msgid "Dashboard"
+msgstr "لوحة التحكم"
+
+#: academy_core/templates/partials/header.html:704
+msgid "Articles"
+msgstr "المقالات"
+
+#: academy_core/templates/partials/header.html:723
+msgid "Courses"
+msgstr "الدورات"
+
+#: academy_core/templates/partials/header.html:742
+msgid "My Courses"
+msgstr "دوراتي"
+
+#: academy_core/templates/partials/header.html:767
+#: academy_core/templates/partials/header.html:867
+msgid "Profile"
+msgstr "الملف الشخصي"
+
+#: academy_core/templates/partials/header.html:787
+msgid "Upgrade"
+msgstr "ترقية الاشتراك"
+
+#: academy_core/templates/partials/header.html:810
+msgid "Settings"
+msgstr "الإعدادات"
+
+#: academy_core/templates/partials/header.html:880
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+#: academy_core/templates/partials/header.html:891
+msgid "Change password"
+msgstr "تغيير كلمة المرور"
+
+#: academy_core/templates/partials/header.html:902
+msgid "Forgot password"
+msgstr "نسيت كلمة المرور"
+
+#: academy_core/templates/partials/header.html:919
+msgid "logup"
+msgstr "إنشاء حساب"
+
+#: academy_core/templates/partials/header.html:923
+msgid "login"
+msgstr "تسجيل الدخول"
+
+#: academy_core/templates/partials/header_search.html:12
+msgid "Search for courses or providers"
+msgstr "ابحث عن دورات أو مدربين"
+
+#: academy_core/templates/partials/header_search.html:16
+msgid "All Categories"
+msgstr "جميع التصنيفات"
+
+#: academy_core/templates/questions.html:14
+#: academy_core/templates/questions.html:56
+#, python-format
+msgid "%(time)s ago"
+msgstr "قبل %(time)s"
+
+#: academy_core/templates/questions.html:42
+msgid "Reply"
+msgstr "رد"
+
+#: academy_core/templates/user_courses.html:13
+msgid "Your purchased courses"
+msgstr "دوراتك المشتراة"
+
+#: academy_core/templates/user_courses.html:56
+msgid "Your subscription-based courses"
+msgstr "دوراتك عبر الاشتراك"
+
+#: academy_core/templates/user_courses.html:72
+msgid "No subscription courses available"
+msgstr "لا توجد دورات متاحة بالاشتراك"
+
+#: academy_core/templates/user_courses.html:76
+msgid "There are currently no courses available for your subscription."
+msgstr "لا توجد حاليًا دورات متاحة ضمن اشتراكك."
+
+#: academy_core/templates/view_articles.html:28
+msgid "No articles found"
+msgstr "لا توجد مقالات"
+
+#: academy_core/templates/view_articles.html:32
+msgid "There are no articles available at the moment."
+msgstr "لا توجد مقالات متاحة في الوقت الحالي."

@@ -1,0 +1,81 @@
+{% block content %}
+
+{% for question in questions %}
+    <div data-q_id="{{ question.id }}" style="background-color: #f4f5f7; border-radius: 12px; margin-bottom: 15px; padding: 10px;">
+        <div class="message-row message-user">
+            <div class="message-bubble" style="width: 100%; padding: 15px; background-color: #ffffff; border: 1px solid #e0e0e0; border-radius: 8px;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #f0f0f0;">
+                    <span style="font-weight: bold; color: #0d6efd; font-size: 15px;">
+                        {{ question.user.username }}
+                    </span>
+                    <span style="color: black; font-size: 13px;">
+                        {{ question.created_at|timesince }} ago
+                    </span>
+                </div>
+                
+                <!-- يجب التأكد من وجود كلاس message-text هنا ليعمل زر الرد بـ JS -->
+                <div class="message-text" style="direction: rtl; text-align: right; margin-bottom: 10px; color: #333; font-size: 15px;">
+                    <span style="color: black; padding: 0px;">{{ question.question }}</span>
+                </div>
+
+                {% if question.question_files.all %}
+                    <div class="message-images">
+                        {% for q_file in question.question_files.all %}
+                            <div class="preview-item">
+                                <img src="{{ q_file.file.url }}" alt="attachment" />
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="message-actions" style="margin-top: 15px; text-align: right;">
+                    <button
+                        type="button"
+                        class="message-reply-btn"
+                        data-q_id="{{ question.id }}"
+                        title="Reply"
+                        style="cursor: pointer; padding: 6px 12px; border: none; background-color: black; color: white; border-radius: 6px;"
+                    >
+                        <span class="reply-icon">↩</span>
+                        <span>Reply</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% for answer in question.answers.all %}
+            <div class="message-row" style="width: 100%; margin: 12px 0 0 0; padding-left: 28px; box-sizing: border-box;">
+                <div class="message-bubble" style="width: 100%; padding: 14px 16px; background: #f8f9fa; color: #333; border: 1px solid #e1e5e9; border-left: 3px solid #6c757d; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); box-sizing: border-box;">
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #e9ecef;">
+                        <span style="font-weight: 600; color: #0d6efd; font-size: 14px;">
+                            {{ answer.user.username }}
+                        </span>
+                        <span style="color: #868e96; font-size: 12px; white-space: nowrap;">
+                            {{ answer.created_at|timesince }} ago
+                        </span>
+                    </div>
+
+                    <!-- كلاس message-text للردود -->
+                    <div class="message-text" style="direction: rtl; text-align: right; color: #343a40; font-size: 14px; line-height: 1.7;">
+                        {{ answer.answer }}
+                    </div>
+
+                    {% if answer.answers_files.all %}
+                        <div class="message-images">
+                            {% for a_file in answer.answers_files.all %}
+                                <div class="preview-item">
+                                    <img src="{{ a_file.file.url }}" alt="attachment" />
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+{% endfor %}
+
+{% endblock %}

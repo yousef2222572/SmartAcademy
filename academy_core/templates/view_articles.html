@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+{% if category.name %}
+    {% include 'common/page_title.html' with title=category.name %}
+{% else %}
+    {% include 'common/page_title.html' with title='All articles' %}
+{% endif %}
+
+<div class="container my-5">
+
+    <div class="row g-4">
+
+        {% for article in articles %}
+
+            <div class="col-12 col-md-6 col-lg-4">
+                {% include 'common/article_card.html' with article=article %}
+            </div>
+
+        {% empty %}
+
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <h5 class="fw-semibold mb-2">
+                            {% trans 'No articles found' %}
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            {% trans 'There are no articles available at the moment.' %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
+

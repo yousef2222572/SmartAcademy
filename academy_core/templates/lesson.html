@@ -1,0 +1,1078 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="container my-5">
+      <section>
+        <div class="card mb-3">
+          <div class="row g-0">
+
+
+
+
+          <div id="lesson_id" data-lesson_id="{{ lesson.id }}"></div>
+
+
+          <div class="col-md-5" id="course-gallery-container">
+            <h2>{{ lesson.lesson_name }}</h2>
+
+            <div class="course-gallery">
+
+              <!-- Main image -->
+
+
+                  
+
+
+
+                <video controls style="width: 200%;  display: block;">
+                    <!-- The basic, most compatible format -->
+                    <source src="{{ lesson.lesson_video.url }}" type="video/mp4">
+                    
+                    <!-- Message shown when the browser is too old and does not support video -->
+                    {% trans "Your browser does not support playing this video." %}
+                </video>
+
+
+
+
+
+
+
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+
+
+
+
+
+
+            </div>
+            <span>{{ lesson.lesson_title }}</span>
+
+          </div>
+
+<style>
+
+
+
+.message-row {
+    display: flex;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.message-user {
+    justify-content: flex-end;
+}
+
+.message-bubble {
+    max-width: 75%;
+    padding: 12px 16px;
+    border-radius: 18px 18px 4px 18px;
+
+    background: var(--bs-primary);
+    color: white;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+
+
+    .course-gallery {
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 12px;
+        width: 100%;
+        max-width: 650px;
+        min-height: 250px;
+    }
+
+    #course-gallery-container {
+        width: 100%;
+        max-width: 650px;
+        margin-right: auto;
+    }
+
+    /* =========================
+       Main course Image
+       ========================= */
+
+    .course-main-swiper {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        aspect-ratio: 1 / 1;
+        min-height: 250px;
+        max-height: 520px;
+
+        border-radius: 10px;
+        overflow: hidden;
+        background: #f8f8f8;
+    }
+
+    .course-main-swiper .swiper-wrapper,
+    .course-main-swiper .swiper-slide {
+        width: 100%;
+        height: 100%;
+        border: solid 1px #f8f8f8;
+
+    }
+
+    .course-main-swiper .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+
+        border-radius: 10px;
+
+    }
+
+    .course-main-swiper .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+    }
+
+
+    /* =========================
+       Thumbnails
+       ========================= */
+
+    .course-thumbs-swiper {
+        width: 72px;
+        height: 100%;
+        flex: 0 0 72px;
+    }
+
+    .course-thumbs-swiper .swiper-wrapper {
+        height: 100%;
+    }
+
+    .course-thumbs-swiper .swiper-slide {
+        width: 72px !important;
+        height: 60px !important;
+
+        opacity: 0.55;
+        border: 2px solid transparent;
+        border-radius: 7px;
+        overflow: hidden;
+        box-sizing: border-box;
+        cursor: pointer;
+        background: #f8f8f8;
+    }
+
+    .course-thumbs-swiper .swiper-slide-thumb-active {
+        opacity: 1;
+        border-color: #6c757d;
+    }
+
+    .course-thumbs-swiper .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        
+    }
+
+
+    @media (max-width: 991.98px) {
+
+        .course-gallery {
+            max-width: 100%;
+        }
+
+        .course-main-swiper {
+            min-height: 280px;
+        }
+    }
+
+
+
+
+    @media (max-width: 767.98px) {
+
+        .course-gallery {
+            gap: 10px;
+            max-width: 100%;
+            min-height: 0;
+        }
+
+        .course-main-swiper {
+            min-height: 260px;
+        }
+
+        .course-thumbs-swiper {
+            width: 60px;
+            flex-basis: 60px;
+        }
+
+        .course-thumbs-swiper .swiper-slide {
+            width: 60px !important;
+            height: 52px !important;
+        }
+    }
+
+
+
+    @media (max-width: 400px) {
+
+        .course-gallery {
+            gap: 8px;
+        }
+
+        .course-main-swiper {
+            min-height: 240px;
+        }
+
+        .course-thumbs-swiper {
+            width: 52px;
+            flex-basis: 52px;
+        }
+
+        .course-thumbs-swiper .swiper-slide {
+            width: 52px !important;
+            height: 48px !important;
+        }
+    }
+        /* =========================
+       Modern Navigation Arrows
+       ========================= */
+      .course-main-swiper .swiper-button-next,
+      .course-main-swiper .swiper-button-prev {
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+
+          background: rgba(255, 255, 255, 0.9);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          border-radius: 10px;
+          overflow: hidden;
+      }
+
+      .course-main-swiper .swiper-button-next:hover,
+      .course-main-swiper .swiper-button-prev:hover {
+          transform: scale(1.05);
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.16);
+      }
+
+      .course-main-swiper .swiper-button-next::after,
+      .course-main-swiper .swiper-button-prev::after {
+          font-size: 13px;
+          font-weight: 700;
+          color: #333;
+      }
+
+      .course-main-swiper .swiper-button-next {
+          right: 10px;
+      }
+
+      .course-main-swiper .swiper-button-prev {
+          left: 10px;
+      }
+              .course-main-swiper .swiper-button-next svg,
+        .course-main-swiper .swiper-button-prev svg {
+            display: none !important;
+            content: none !important;
+        }
+</style>
+
+
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.css"
+          />
+
+          <script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
+
+          <script>
+            var swiper = new Swiper(".mySwiper", {
+              direction: "vertical",
+              loop: true,
+              spaceBetween: 10,
+              slidesPerView: 5,
+              freeMode: true,
+              watchSlidesProgress: true,
+            });
+
+            var swiper2 = new Swiper(".mySwiper2", {
+              loop: true,
+              spaceBetween: 10,
+              navigation: {
+                  nextEl: ".course-main-swiper .swiper-button-next",
+                  prevEl: ".course-main-swiper .swiper-button-prev",
+              },
+
+              thumbs: {
+                swiper: swiper,
+              },
+            });
+          </script>
+
+
+            <div class="col-md-5">
+
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+        <div class="card">
+          <div class="card-header p-0 bg-white">
+            <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active text-secondary" id="pills-home-tab" data-bs-toggle="pill"
+                  data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+                    Description
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link text-secondary" id="pills-profile-tab" data-bs-toggle="pill"
+                  data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                  aria-selected="false">
+                  questions and answers
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div   class="card-body">
+            <div  class="tab-content" id="pills-tabContent">
+              <div    class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+
+
+
+                  <form  class="message_send_form">
+                    {% csrf_token %}
+                    <div id="ai_messages_container">
+                    {% include 'ai_messages.html' with messages=messages %}
+                    </div>
+                    <div class="input-wrapper">
+
+                        <input type="text" id="ai_message"  name="message" placeholder="Write a message..." autocomplete="off" required>
+
+                        <button type="button" id="send_btn_ai">
+                            <i class="lni lni-telegram-original"></i>
+                        </button>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <script>
+
+                                            
+
+                    const inputField = document.getElementById('ai_message');
+                    const send_btn_ai = document.getElementById("send_btn_ai");
+
+
+                    inputField.addEventListener("keydown", function (e) {
+
+                        if (e.key === "Enter") {
+                            e.preventDefault(); 
+                            
+
+                            send_btn_ai.click();
+                        }
+                    });
+                      send_btn_ai.addEventListener("click", async function (e) {
+                          e.preventDefault();
+                          
+                          
+                          const form = this.closest('.message_send_form');
+                          const input = form.querySelector('input[name="message"]');
+                          const message = input.value.trim();
+                          const lesson_id = document.getElementById("lesson_id").dataset.lesson_id;
+                          
+                          
+                          if (!message) {
+                              return;
+                          }
+                          
+                          
+                          
+                          const messagesContainer = document.getElementById("ai_messages_container");
+
+                          if (!messagesContainer) {
+                              console.error("Could not find the messages container! Make sure a div with id='ai_messages_container' exists");
+                              return; 
+                          }
+
+                          console.log("SEND CLICK");
+
+                          
+                          
+                          
+                          const userMessageElement = document.createElement("div");
+                          userMessageElement.classList.add("message-row", "message-user"); 
+                          userMessageElement.innerHTML = `<div class="message-bubble"><div class="message-text">${message}</div></div>`;
+                          messagesContainer.appendChild(userMessageElement);
+
+                          
+                          input.value = "";
+
+                          
+                          
+                          
+                          const aiMessageElement = document.createElement("div");
+                          
+                          aiMessageElement.classList.add("message-row", "message-ai"); 
+                          aiMessageElement.innerHTML = `<div class="message-bubble" style="background:#f1f3f5; color:#000;"><div class="message-text"></div></div>`;
+                          messagesContainer.appendChild(aiMessageElement);
+                          const formDataToSend = new FormData(form);
+
+
+                          formDataToSend.append("message", message);
+                          formDataToSend.append("lesson_id", lesson_id);
+                          
+                          const aiTextContainer = aiMessageElement.querySelector(".message-text");
+
+                          
+                          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                          try {
+                              const response = await fetch("/ai/sendaimessage/", {
+                                  method: "POST",
+                                  headers: {
+                                      "X-CSRFToken": form.querySelector('input[name="csrfmiddlewaretoken"]').value
+                                  },
+                                  body:formDataToSend
+                              });
+                              
+                              if (!response.ok) {
+                                  throw new Error(`HTTP error: ${response.status}`);
+                              }
+
+                              if (!response.body) {
+                                  throw new Error("Streaming is not supported by this response.");
+                              }
+
+                              const reader = response.body.getReader();
+                              const decoder = new TextDecoder();
+                              let fullResponse = "";
+
+                              while (true) {
+                                  const { value, done } = await reader.read();
+                                  if (done) break;
+                                  
+                                  const chunk = decoder.decode(value, { stream: true });
+                                  fullResponse += chunk;
+
+                                  
+                                  aiTextContainer.textContent = fullResponse;
+
+                                  
+                                  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                              }
+
+                              
+                              fullResponse += decoder.decode();
+                              console.log("Completed:", fullResponse);
+
+                          } catch (error) {
+                              console.error("Streaming error:", error);
+                              aiTextContainer.textContent = "{% trans 'An error occurred while fetching the response.' %}";
+                          }
+                      });
+                    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </form>
+              </div>
+              
+
+                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    
+
+                  <div id="q_countainer">
+                    {% include 'questions.html' with questions=questions %}
+                  </div> 
+
+                    <form id="test-form" class="message_send_form">
+                        {% csrf_token %}
+                        <div class="input-wrapper">
+                            <input type="text" id="message" name="message" placeholder="Write a message..." autocomplete="off" required>
+                            <input type="file" id="image" name="file" accept="image/*" multiple>
+                            <button type="button" id="attach_btn" class="attach-btn">
+                                <i class="lni lni-paperclip"></i>
+                            </button>
+                            <button type="button" id="send_btn">
+                                <i class="lni lni-telegram-original"></i>
+                            </button>
+                        </div>
+                        
+                        <div id="image-preview" class="image-preview">
+                            <img id="preview-img" src="" alt="Selected image">
+                            <button type="button" id="remove-image">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+
+
+
+
+    <style>
+      .message-actions {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 2px;
+      }
+
+      .message-reply-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 6px 10px;
+          border: none;
+          border-radius: 8px;
+          background: transparent;
+          color: #a9a9a9;
+          font-size: 12px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+      }
+
+      .message-reply-btn:hover {
+          background: rgba(255, 255, 255, 0.08);
+          color: #ffffff;
+      }
+
+      .message-reply-btn:active {
+          transform: scale(0.96);
+      }
+
+      .reply-icon {
+          font-size: 15px;
+          line-height: 1;
+      }
+    .modern-form {
+        width: 100%;
+        max-width: 700px;
+        margin: 30px auto;
+    }
+
+    .input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 8px 8px 8px 18px;
+
+        background: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 18px;
+
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .input-wrapper:focus-within {
+        border-color: var(--bs-primary);
+        box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.10);
+    }
+
+    .input-wrapper input {
+        flex: 1;
+
+        border: none;
+        outline: none;
+
+        background: transparent;
+
+        font-size: 15px;
+        color: #212529;
+    }
+
+    .input-wrapper input::placeholder {
+        color: #adb5bd;
+    }
+
+    .input-wrapper button {
+        width: 42px;
+        height: 42px;
+
+        border: none;
+        border-radius: 13px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: var(--bs-primary);
+        color: white;
+
+        cursor: pointer;
+
+        transition:
+            transform 0.2s ease,
+            opacity 0.2s ease;
+    }
+
+    .input-wrapper button:hover {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+    .input-wrapper button i {
+        font-size: 17px;
+    }
+    .input-wrapper input[type="text"] {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 15px;
+        color: #212529;
+    }
+
+    .input-wrapper input[type="text"]::placeholder {
+        color: #adb5bd;
+    }
+
+    .attach-btn {
+        width: 42px;
+        height: 42px;
+
+        border: none;
+        border-radius: 13px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: transparent;
+        color: #6c757d;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .attach-btn:hover {
+        background: #f1f3f5;
+        color: var(--bs-primary);
+        transform: scale(1.05);
+    }
+    input[type="file"] {
+        display: none;
+    }
+    .file-preview {
+        display: none;
+
+        margin-top: 8px;
+        padding: 8px 12px;
+
+        width: fit-content;
+        max-width: 100%;
+
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 12px;
+
+        font-size: 13px;
+    }
+
+    .file-preview.active {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+
+
+    .image-preview {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 90px;
+      margin-top: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #dee2e6;
+      background: #f8f9fa;
+  }
+
+  .image-preview.active {
+      display: block;
+  }
+
+  .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+
+  .image-preview button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+
+      width: 24px;
+      height: 24px;
+
+      border: none;
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: rgba(0, 0, 0, 0.65);
+      color: white;
+
+      cursor: pointer;
+  }
+
+  
+    /* Container for all previews */
+    .image-preview {
+        display: none;
+        gap: 10px;
+        margin-top: 10px;
+        padding: 6px;
+        overflow-x: auto; /* allows horizontal scrolling when there are many images */
+        white-space: nowrap;
+    }
+
+    .image-preview.active {
+        display: flex; /* turn the container into Flex so images line up horizontally */
+        align-items: center;
+    }
+
+    /* Single preview item holding the image and remove button */
+    .preview-item {
+        position: relative;
+        flex: 0 0 80px; /* fixed size for each image item */
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+        background: #f8f9fa;
+    }
+
+    .preview-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* make sure the image fills the container without distortion */
+        display: block;
+    }
+
+    /* Remove button on each image */
+    .remove-img-btn {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 22px;
+        height: 22px;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.65);
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .remove-img-btn:hover {
+        background: rgba(220, 53, 69, 0.9);
+    }
+    /* =========================
+      User message
+    ========================= */
+
+    .message-row.message-user {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin: 12px 0;
+        padding: 0 12px;
+    }
+
+    .message-user .message-bubble {
+        max-width: min(75%, 680px);
+        padding: 10px;
+        border-radius: 18px 18px 5px 18px;
+        background: #2f2f2f;
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+
+        overflow: hidden;
+    }
+
+
+    /* =========================
+      Message text
+    ========================= */
+
+    .message-text {
+        padding: 6px 8px;
+
+        font-size: 15px;
+        line-height: 1.6;
+
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+
+    /* =========================
+      Images container
+    ========================= */
+
+    .message-images {
+        display: grid;
+
+        grid-template-columns: repeat(
+            auto-fit,
+            minmax(120px, 1fr)
+        );
+
+        gap: 6px;
+
+        width: 100%;
+    }
+
+
+    /* =========================
+      Image
+    ========================= */
+
+    .message-images .preview-item {
+        width: 100%;
+        height: 140px;
+
+        overflow: hidden;
+
+        border-radius: 12px;
+
+        background: #1f1f1f;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .message-images .preview-item img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+        object-position: center;
+
+        display: block;
+    }
+
+
+    /* =========================
+      Single image
+    ========================= */
+
+    .message-images:has(.preview-item:only-child) {
+        display: block;
+    }
+
+    .message-images:has(.preview-item:only-child) .preview-item {
+        width: auto;
+        max-width: 420px;
+        height: auto;
+        min-height: 100px;
+    }
+
+    .message-images:has(.preview-item:only-child) img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 420px;
+
+        object-fit: contain;
+    }
+
+
+    /* =========================
+      Mobile
+    ========================= */
+
+    @media (max-width: 600px) {
+
+        .message-user .message-bubble {
+            max-width: 90%;
+        }
+
+        .message-images {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .message-images .preview-item {
+            height: 110px;
+        }
+    }
+
+
+
+      .reply-banner {
+          display: none;
+          align-items: center;
+          justify-content: space-between;
+          background: #f1f3f5;
+          border-left: 3px solid #868e96;
+          border-radius: 8px;
+          padding: 6px 12px;
+          margin-bottom: 8px;
+          font-size: 12px;
+          color: #6c757d;
+      }
+
+      .reply-banner .reply-info {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          overflow: hidden;
+          white-space: nowrap;
+      }
+
+      .reply-banner .reply-title {
+          font-weight: 600;
+          color: #495057;
+      }
+
+      .reply-banner .reply-text-preview {
+          color: #868e96;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 350px;
+      }
+
+      .reply-banner .cancel-reply-btn {
+          background: transparent;
+          border: none;
+          color: #adb5bd;
+          font-size: 16px;
+          line-height: 1;
+          cursor: pointer;
+          padding: 0 4px;
+      }
+
+      .reply-banner .cancel-reply-btn:hover {
+          color: #dc3545;
+      }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    
+{% endblock %}

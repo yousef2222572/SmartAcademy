@@ -1,0 +1,241 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-21 18:29+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: academy_core/templates/base.html:10
+msgid "Intex Store"
+msgstr ""
+
+#: academy_core/templates/cart.html:61
+msgid "Your cart is empty"
+msgstr ""
+
+#: academy_core/templates/cart.html:75
+#: academy_core/templates/emails/order.html:139
+msgid "Price"
+msgstr ""
+
+#: academy_core/templates/cart.html:79
+#: academy_core/templates/emails/order.html:178
+msgid "Total"
+msgstr ""
+
+#: academy_core/templates/cart.html:86
+msgid "Processed to checkout"
+msgstr ""
+
+#: academy_core/templates/category.html:16
+msgid "All courses"
+msgstr ""
+
+#: academy_core/templates/category.html:37
+#: academy_core/templates/user_courses.html:25
+msgid "We were not able to find any book."
+msgstr ""
+
+#: academy_core/templates/category.html:48
+#: academy_core/templates/category.html:52
+#: academy_core/templates/user_courses.html:36
+#: academy_core/templates/user_courses.html:40
+msgid "Previous"
+msgstr ""
+
+#: academy_core/templates/category.html:57
+#: academy_core/templates/category.html:61
+#: academy_core/templates/user_courses.html:45
+#: academy_core/templates/user_courses.html:49
+msgid "Next"
+msgstr ""
+
+#: academy_core/templates/checkout-complete.html:13
+msgid ""
+"Your purchase was completed successfully, an email with the download links "
+"for the books you ordered is on its way!"
+msgstr ""
+
+#: academy_core/templates/checkout-complete.html:16
+msgid "Back to home page"
+msgstr ""
+
+#: academy_core/templates/common/page_title.html:2
+msgid "{{ title }}"
+msgstr ""
+
+#: academy_core/templates/course_show.html:47
+msgid "Course Content"
+msgstr ""
+
+#: academy_core/templates/course_show.html:51
+msgid "Explore all tracks included in this course."
+msgstr ""
+
+#: academy_core/templates/course_show.html:184
+msgid "No lessons available yet."
+msgstr ""
+
+#: academy_core/templates/course_show.html:198
+msgid "No sections available."
+msgstr ""
+
+#: academy_core/templates/course_show.html:217
+msgid "No tracks available."
+msgstr ""
+
+#: academy_core/templates/course_show.html:221
+msgid "This course does not have any content yet."
+msgstr ""
+
+#: academy_core/templates/emails/order.html:50
+msgid "App Name"
+msgstr ""
+
+#: academy_core/templates/emails/order.html:60
+msgid "Customer"
+msgstr ""
+
+#: academy_core/templates/emails/order.html:74
+msgid "Order"
+msgstr ""
+
+#: academy_core/templates/emails/order.html:88
+msgid "Date"
+msgstr ""
+
+#: academy_core/templates/emails/order.html:128
+msgid "Book"
+msgstr ""
+
+#: academy_core/templates/lesson.html:34
+msgid "Your browser does not support playing this video."
+msgstr ""
+
+#: academy_core/templates/lesson.html:519
+msgid "An error occurred while fetching the response."
+msgstr ""
+
+#: academy_core/templates/partials/footer.html:5
+msgid "© 2026 pools store All rights reserved."
+msgstr ""
+
+#: academy_core/templates/partials/header.html:608
+#: academy_core/templates/partials/header.html:610
+msgid "Academy logo"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:631
+msgid "Collapse sidebar"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:651
+msgid "Home"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:658
+msgid "Navigation"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:682
+msgid "Dashboard"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:704
+msgid "Articles"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:723
+msgid "Courses"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:742
+msgid "My Courses"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:767
+#: academy_core/templates/partials/header.html:867
+msgid "Profile"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:787
+msgid "Upgrade"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:810
+msgid "Settings"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:880
+msgid "Logout"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:891
+msgid "Change password"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:902
+msgid "Forgot password"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:919
+msgid "logup"
+msgstr ""
+
+#: academy_core/templates/partials/header.html:923
+msgid "login"
+msgstr ""
+
+#: academy_core/templates/partials/header_search.html:12
+msgid "Search for courses or providers"
+msgstr ""
+
+#: academy_core/templates/partials/header_search.html:16
+msgid "All Categories"
+msgstr ""
+
+#: academy_core/templates/questions.html:14
+#: academy_core/templates/questions.html:56
+#, python-format
+msgid "%(time)s ago"
+msgstr ""
+
+#: academy_core/templates/questions.html:42
+msgid "Reply"
+msgstr ""
+
+#: academy_core/templates/user_courses.html:13
+msgid "Your purchased courses"
+msgstr ""
+
+#: academy_core/templates/user_courses.html:56
+msgid "Your subscription-based courses"
+msgstr ""
+
+#: academy_core/templates/user_courses.html:72
+msgid "No subscription courses available"
+msgstr ""
+
+#: academy_core/templates/user_courses.html:76
+msgid "There are currently no courses available for your subscription."
+msgstr ""
+
+#: academy_core/templates/view_articles.html:28
+msgid "No articles found"
+msgstr ""
+
+#: academy_core/templates/view_articles.html:32
+msgid "There are no articles available at the moment."
+msgstr ""

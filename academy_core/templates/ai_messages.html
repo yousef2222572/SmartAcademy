@@ -1,0 +1,27 @@
+{% load i18n %}
+{% block content %}
+
+{% for message in messages %}
+  {% comment %}
+    If the value is 1 it means the AI sent the message, 2 means the user did.
+  {% endcomment %}
+  
+  {% if message.role == 1 %}
+    <!-- AI message -->
+    <div class="message-row message-ai">
+      <div class="message-bubble" style="background:#f1f3f5; color:#000;">
+        <div class="message-text">{{ message.content }}</div>
+      </div>
+    </div>
+  {% else %}
+    <!-- User message -->
+    <div class="message-row message-user">
+      <div class="message-bubble">
+        <div class="message-text">{{ message.content }}</div>
+      </div>
+    </div>
+  {% endif %}
+{% empty %}
+{% endfor %}
+
+{% endblock %}

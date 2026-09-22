@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="my-5">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+
+                <div class="card border-0 shadow-sm rounded-4">
+
+                    <div class="card-body p-4 p-lg-5 text-center">
+
+                        <span class="text-uppercase text-muted small fw-semibold">
+                            {{ plan }}
+                        </span>
+
+                        <h2 class="fw-bold mt-2 mb-3">
+                            "Complete your subscription" 
+                        </h2>
+
+                        <p class="text-muted mb-4">
+                            trans "You will be redirected to Paddle to finish the payment securely." 
+                        </p>
+
+                        <button
+                            type="button"
+                            id="paddle-checkout"
+                            class="btn btn-primary w-100 py-2"
+                        >
+                             trans "Pay with Paddle" 
+                        </button>
+
+                        <p
+                            id="paddle-error"
+                            class="text-danger small mt-3 mb-0"
+                            style="display: none;"
+                        ></p>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+
+
+<script>
+    const PADDLE_PRICE_ID = "{{ price_id }}";
+    const PADDLE_CLIENT_TOKEN = "{{ paddle_client_token }}";
+    const PADDLE_USER_ID = "{{ user_id }}";
+</script>
+
+<script>
+    (function () {
+
+        const errorBox = document.getElementById('paddle-error');
+        const payButton = document.getElementById('paddle-checkout');
+
+        function showError(message) {
+            errorBox.textContent = message;
+            errorBox.style.display = 'block';
+            console.error('[paddle]', message);
+        }
+
+        if (typeof Paddle === 'undefined') {
+            payButton.disabled = true;
+            showError('"Could not load Paddle.js. Check the network tab / ad blocker." ');
+            return;
+        }
+
+        if (!PADDLE_CLIENT_TOKEN) {
+            payButton.disabled = true;
+            showError('"Missing Paddle client-side token." ');
+            return;
+        }
+
+        if (!PADDLE_PRICE_ID) {
+            payButton.disabled = true;
+            showError('"Missing Paddle price ID for this plan." ');
+            return;
+        }
+
+        // Paddle price entities always start with "pri_".
+        // A "pro_" id is a PRODUCT id -- passing it here is what makes
+        // Paddle.Checkout.open() fail with "Something went wrong".
+        if (!PADDLE_PRICE_ID.startsWith('pri_')) {
+            payButton.disabled = true;
+            showError(
+                'Invalid Paddle price ID "' + PADDLE_PRICE_ID + '". ' +
+                'Price IDs start with "pri_" (a "pro_" id is a product ID).'
+            );
+            return;
+        }
+
+        Paddle.Environment.set("sandbox");
+
+        Paddle.Initialize({
+            token: PADDLE_CLIENT_TOKEN,
+            // Logs Paddle's own errors/warnings so failures are visible
+            eventCallback: function (data) {
+                if (data && (data.name === 'checkout.error' || data.name === 'checkout.warning')) {
+                    showError('Paddle says: ' + (data.detail || data.name));
+                }
+                console.log('[paddle]', data);
+            },
+        });
+
+        payButton.addEventListener('click', function () {
+            Paddle.Checkout.open({
+                items: [
+                    {
+                        priceId: PADDLE_PRICE_ID,
+                        quantity: 1,
+                    },
+                ],
+                customData: {
+                    user_id: "{{user_id}}",
+                },
+            });
+        });
+
+    })();
+</script>
+{% endblock %}

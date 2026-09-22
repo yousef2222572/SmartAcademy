@@ -1,0 +1,372 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container my-5">
+
+    <!-- Course Header -->
+    <div class="course-header mb-5">
+
+        <div class="row align-items-center g-4">
+
+            <div class="col-md-4">
+                <img
+                    src="{{ course.image.url }}"
+                    alt="{{ course.course_name }}"
+                    class="course-image"
+                >
+            </div>
+
+            <div class="col-md-8">
+
+                <h1 class="fw-bold mb-2 bt-color">
+                    {{ course.course_name }}
+                </h1>
+
+                <h5 class="text-muted mb-3">
+                    {{ course.course_title }}
+                </h5>
+
+                <p class="text-muted mb-0">
+                    {{ course.course_description }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Course Content -->
+    <section>
+
+        <div class="mb-4">
+            <h2 class="fw-bold mb-1 bt-color">
+                {% trans "Course Content" %}
+            </h2>
+
+            <p class="text-muted mb-0">
+                {% trans "Explore all tracks included in this course." %}
+            </p>
+        </div>
+
+
+        <div class="tracks-container">
+
+            {% for track in tracks %}
+
+                <div class="track-card mb-3">
+
+
+                    <div
+                        class="track-header"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#track-{{ track.id }}"
+                        aria-expanded="false"
+                        aria-controls="track-{{ track.id }}"
+                    >
+
+                        <div class="d-flex align-items-center gap-3">
+
+                            <div class="track-number">
+                                {{ forloop.counter }}
+                            </div>
+
+                            <div>
+                                <h5 class="fw-bold mb-1">
+                                    {{ track.track_name }}
+                                </h5>
+
+                                <p class="text-muted mb-0">
+                                    {{ track.track_title }}
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <span class="track-arrow">
+                            <i class="bi bi-chevron-down"></i>
+                        </span>
+
+                    </div>
+
+
+
+                    <div id="track-{{ track.id }}" class="collapse">
+
+                        <div class="sections-container">
+
+
+
+                                {% for section in track.sections_set.all %}
+
+                                    <div class="section-block">
+
+
+                                        <div
+                                            class="section-header track-header"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#section-{{ section.id }}"
+                                            aria-expanded="false"
+                                            aria-controls="section-{{ section.id }}"
+                                        >
+
+                                            <div class="d-flex align-items-center gap-3">
+
+                                                <div class="section-number">
+                                                    {{ forloop.counter }}
+                                                </div>
+
+                                                <div>
+                                                    <h6 class="fw-semibold mb-1">
+                                                        {{ section.section_name }}
+                                                    </h6>
+
+                                                    <p class="text-muted mb-0">
+                                                        {{ section.section_title }}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+
+                                            <span class="section-arrow">
+                                                <i class="bi bi-chevron-down"></i>
+                                            </span>
+
+                                        </div>
+
+
+                                        <!-- Lessons -->
+                                        <div
+                                            id="section-{{ section.id }}"
+                                            class="collapse"
+                                        >
+
+                                            <div class="lessons-container">
+
+                                                {% for lesson in section.lessons_set.all %}
+
+                                                        <a
+                                                            href="{% url 'academy.lesson' lesson.id %}"
+                                                            class="lesson-header"
+                                                        >
+
+
+                                                        <div class="d-flex align-items-center gap-3">
+
+                                                            <div class="lesson-number">
+                                                                {{ forloop.counter }}
+                                                            </div>
+
+                                                            <div>
+                                                                <h6 class="fw-semibold mb-1">
+                                                                    {{ lesson.lesson_name }}
+                                                                </h6>
+
+                                                                <p class="text-muted mb-0">
+                                                                    {{ lesson.lesson_title }}
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <span class="lesson-arrow">
+                                                            <i class="bi bi-arrow-right"></i>
+                                                        </span>
+
+                                                    </a>
+
+                                                {% empty %}
+
+                                                    <div class="no-lessons">
+                                                        {% trans "No lessons available yet." %}
+                                                    </div>
+
+                                                {% endfor %}
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                {% empty %}
+
+                                    <p class="text-muted mb-0">
+                                        {% trans "No sections available." %}
+                                    </p>
+
+                                {% endfor %}
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% empty %}
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+
+                        <h5 class="fw-bold mb-2">
+                            {% trans "No tracks available." %}
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            {% trans "This course does not have any content yet." %}
+                        </p>
+
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<style>
+
+.course-header {
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 28px;
+}
+
+.course-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 22px;
+    display: block;
+}
+
+.track-card {
+    border: 1px solid #e9ecef;
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+}
+
+.track-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.track-header:hover {
+    background: #f8f9fa;
+}
+
+.track-number {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bs-primary);
+    color: white;
+    font-weight: 700;
+}
+
+.track-arrow {
+    font-size: 18px;
+    transition: transform 0.2s ease;
+}
+
+.sections-container {
+    padding: 0 24px 10px;
+    border-top: 1px solid #eeeeee;
+}
+
+.section-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 17px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.section-item:last-child {
+    border-bottom: none;
+}
+
+.section-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 10px;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.section-content h6 {
+    font-size: 15px;
+}
+
+.section-content p {
+    font-size: 13px;
+}
+.lesson-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 15px 0;
+
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+
+    transition: background 0.2s ease;
+}
+
+.lesson-header:hover {
+    background: #f8f9fa;
+}
+
+.lesson-number {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+
+    border-radius: 10px;
+    background: #f1f3f5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.lesson-arrow {
+    font-size: 15px;
+    transition: transform 0.2s ease;
+}
+
+.lesson-header:hover .lesson-arrow {
+    transform: translateX(4px);
+}
+</style>
+
+{% endblock %}
+

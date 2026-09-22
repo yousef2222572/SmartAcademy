@@ -1,0 +1,52 @@
+{% load i18n %}
+
+<div class="course card mb-4" style="  background-color: rgb(231, 230, 230) !important; "
+     onclick="window.location.href='{% url 'academy.course.show' course.id %}'">
+
+    <img
+        src="{{ course.image.url }}"
+        class="card-img-top course-image"
+        alt="{{ course.name }}"
+    >
+
+    <div class="card-img-overlay">
+    </div>
+
+    <div class="card-body">
+        <h6 class="text-muted">{{ course.course_name }}</h6>
+        <h6 class="card-title">{{ course.course_title }}</h6>
+        <strong class="fw-bold text-success">{{ course.price }}</strong>
+    </div>
+
+</div>
+
+<style>
+.course {
+    border-radius: 30px !important;
+    overflow: hidden !important;
+    cursor: pointer;
+}
+
+.course-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: 0 !important;
+}
+
+.course .card-body {
+    border-radius: 0 0 30px 30px;
+}
+
+.card-img-overlay > a {
+    width: fit-content !important;
+    right: 0 !important;
+    left: auto !important;
+}
+
+.card-img-overlay:hover {
+    background: rgba(0, 0, 0, 0.095);
+    border: solid 3px rgba(0, 0, 0, 0.595);
+}
+</style>

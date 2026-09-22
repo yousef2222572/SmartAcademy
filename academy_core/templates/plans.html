@@ -1,0 +1,197 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<main class="my-5">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="text-center mb-5">
+
+            <h1 class="fw-bold mb-3">
+                Choose the plan that fits you
+            </h1>
+
+            <p class="text-muted fs-5 mb-0">
+                Get more from your learning experience with the plan that suits your needs.
+            </p>
+
+        </div>
+
+
+
+        <div class="row justify-content-center g-4">
+
+
+            <div class="col-12 col-md-6 col-lg-5">
+
+                <div class="card h-100 shadow-sm border-0 rounded-4">
+
+                    <div class="card-body p-4 p-lg-5">
+
+                        <div class="mb-4">
+                            <span class="text-uppercase text-muted small fw-semibold">
+                                pro
+                            </span>
+
+                            <h2 class="fw-bold mt-2 mb-2">
+                                $19
+                                <small class="fs-6 text-muted fw-normal">
+                                    / month
+                                </small>
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Everything you need to start learning comfortably.
+                            </p>
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <h6 class="fw-bold mb-3">
+                            What's included
+                        </h6>
+
+                        <ul class="list-group list-group-flush mb-4">
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Access to pro courses
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Save your courses
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Track your learning progress
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Basic learning tools
+                            </li>
+
+                        </ul>
+
+                            <a href="{% url 'subscribe' 'pro' %}"
+                            class="btn btn-primary w-100 py-2">
+                                Choose pro
+                            </a>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- unlimited -->
+            <div class="col-12 col-md-6 col-lg-5">
+
+                <div class="card h-100 shadow border-primary border-2 rounded-4 position-relative">
+
+
+
+
+                    <div class="card-body p-4 p-lg-5">
+
+                        <div class="mb-4">
+
+                            <span class="text-uppercase text-primary small fw-semibold">
+                                unlimited
+                            </span>
+
+                            <h2 class="fw-bold mt-2 mb-2">
+                                $49
+                                <small class="fs-6 text-muted fw-normal">
+                                    / month
+                                </small>
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Unlock the full learning experience with unlimited features.
+                            </p>
+
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <h6 class="fw-bold mb-3">
+                            Everything in pro, plus
+                        </h6>
+
+                        <ul class="list-group list-group-flush mb-4">
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Access to premium courses
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Unlimited learning
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ AI learning assistant
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ unlimited learning tools
+                            </li>
+
+                            <li class="list-group-item px-0 border-0">
+                                ✓ Priority support
+                            </li>
+
+                        </ul>
+
+
+                            <a href="{% url 'subscribe' 'unlimited' %}"
+                            class="btn btn-primary w-100 py-2">
+                                Choose unlimited
+                            </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bottom text -->
+        <div class="text-center mt-5">
+
+            <p class="text-muted mb-0">
+                improve with smart academy
+            </p>
+
+        </div>
+
+    </div>
+</main>
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+
+<script>
+    Paddle.Environment.set("sandbox");
+
+    Paddle.Initialize({
+        token: "{{ paddle_client_token }}"
+    });
+
+    function openCheckout() {
+        Paddle.Checkout.open({
+            items: [
+                {
+                    priceId: "{{ price_id }}",
+                    quantity: 1
+                }
+            ]
+        });
+    }
+</script>
+{% endblock %}

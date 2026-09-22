@@ -1,0 +1,1039 @@
+{% load static i18n %}
+<style>
+
+:root {
+  --font: "Geist", system-ui, -apple-system, sans-serif;
+
+  --bg: #0a0b0e;
+  --surface: #101217;
+  --surface-2: #161922;
+  --surface-3: #1d212b;
+  --border: #242834;
+  --border-soft: #1c2029;
+
+  --text: #e9ebef;
+  --text-2: #b3b9c4;
+  --muted: #7c828f;
+
+  --accent: #4f8cff;
+  --accent-ink: #fff;
+  --accent-weak: color-mix(
+    in srgb,
+    var(--accent) 14%,
+    transparent
+  );
+
+  --shadow:
+    0 1px 0 rgba(255,255,255,.02) inset,
+    0 20px 50px -24px rgba(0,0,0,.8);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---------- sidebar ---------- */
+
+.chat-sidebar {
+  --surface: #ffffff;
+  --surface-2: #f5f7fa;
+  --surface-3: #edf1f5;
+  --border: #dfe4ea;
+  --border-soft: #e8ecf1;
+  --text: #20242b;
+  --text-2: #596273;
+  --muted: #7c8491;
+
+  width: 264px;
+  height: 100vh;
+  min-height: 0;
+  flex: 0 0 264px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 30;
+
+  background: var(--surface);
+
+  border-right: 1px solid var(--border-soft);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  transition: width .2s ease;
+}
+
+.header-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  align-self: start;
+  background: transparent;
+}
+
+.category-navbar {
+  background-color: rgb(219, 215, 215) !important;
+}
+
+/* ---------- brand ---------- */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+
+  padding: 1.15rem 1.15rem .9rem;
+
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.brand-name {
+  white-space: nowrap;
+}
+
+.sidebar-toggle {
+  width: 34px;
+  height: 34px;
+  margin: .1rem .8rem .8rem auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: .15s;
+}
+
+.sidebar-toggle:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.sidebar-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.brand .logo {
+  width: 86px;
+  height: 86px;
+
+  border-radius: 8px;
+
+  display: grid;
+  place-items: center;
+
+  background:white;
+
+  color: var(--accent-ink);
+
+  flex: none;
+}
+
+.brand .logo svg {
+  width: 15px;
+  height: 15px;
+}
+
+.brand .logo > svg {
+  display: none;
+}
+
+.brand .logo .academy-logo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brand small {
+  margin-left: auto;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  color: var(--muted);
+
+  letter-spacing: .06em;
+
+  border: 1px solid var(--border);
+
+  padding: .28em .5em;
+
+  border-radius: 6px;
+}
+
+/* ---------- main button ---------- */
+
+.home {
+  margin: .2rem .8rem .8rem;
+
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+
+  padding: .7rem .85rem;
+
+  border: 1px solid var(--border);
+  border-radius: 11px;
+
+  font-family: inherit;
+  font-weight: 500;
+  font-size: .92rem;
+
+  background: var(--surface-2);
+  color: var(--text);
+
+  cursor: pointer;
+
+  transition: .15s;
+}
+
+.home:hover {
+  border-color: var(--accent);
+  background: var(--surface-3);
+}
+
+.home svg {
+  width: 16px;
+  height: 16px;
+
+  color: var(--accent);
+}
+
+/* ---------- section label ---------- */
+
+.side-label {
+  padding: .4rem 1.15rem .3rem;
+
+  font-size: 10.5px;
+  font-weight: 500;
+
+  letter-spacing: .09em;
+  text-transform: uppercase;
+
+  color: var(--muted);
+}
+
+/* ---------- sidebar buttons ---------- */
+
+.threads {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 0 .55rem 1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.thread {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: .55rem;
+
+  padding: .6rem .7rem;
+
+  border-radius: 9px;
+
+  color: var(--text-2);
+
+  font-family: inherit;
+  font-size: .9rem;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition: .12s;
+
+  border: 1px solid transparent;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+.thread:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.thread.active {
+  background: var(--surface-2);
+  color: var(--text);
+
+  border-color: var(--border-soft);
+}
+
+.thread svg {
+  width: 15px;
+  height: 15px;
+
+  flex: none;
+
+  opacity: .7;
+}
+
+/* ---------- bottom ---------- */
+
+.side-foot {
+  border-top: 1px solid var(--border-soft);
+
+  padding: .7rem .75rem;
+
+  display: flex;
+  align-items: center;
+
+  gap: .6rem;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+
+  border-radius: 9px;
+
+  flex: none;
+
+  display: grid;
+  place-items: center;
+
+  font-weight: 600;
+  font-size: .8rem;
+
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.side-foot .who {
+  min-width: 0;
+
+  line-height: 1.25;
+}
+
+.side-foot .who b {
+  font-weight: 600;
+  font-size: .86rem;
+
+  display: block;
+}
+
+.side-foot .who span {
+  font-size: .75rem;
+  color: var(--muted);
+}
+
+/* ---------- icon button ---------- */
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 9px;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--text-2);
+
+  transition: .14s;
+
+  flex: none;
+
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.icon-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.side-foot .icon-btn {
+  margin-left: auto;
+}
+
+.site-layout.sidebar-collapsed .chat-sidebar {
+  width: 72px;
+  flex-basis: 72px;
+}
+
+.site-layout.sidebar-collapsed .brand {
+  width: 40px;
+  height: 40px;
+  margin: .7rem auto .8rem;
+  padding: 0;
+  justify-content: center;
+  gap: 0;
+}
+
+.site-layout.sidebar-collapsed .brand .logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+}
+
+.site-layout.sidebar-collapsed .brand .logo svg {
+  width: 18px;
+  height: 18px;
+}
+
+.site-layout.sidebar-collapsed .brand-name,
+.site-layout.sidebar-collapsed .brand small,
+.site-layout.sidebar-collapsed .home,
+.site-layout.sidebar-collapsed .side-label,
+.site-layout.sidebar-collapsed .thread,
+.site-layout.sidebar-collapsed .who {
+  font-size: 0;
+}
+
+.site-layout.sidebar-collapsed .home,
+.site-layout.sidebar-collapsed .thread {
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.site-layout.sidebar-collapsed .thread svg,
+.site-layout.sidebar-collapsed .home svg {
+  width: 18px;
+  height: 18px;
+}
+
+.site-layout.sidebar-collapsed .sidebar-toggle {
+  width: 40px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.site-layout.sidebar-collapsed .side-foot {
+  width: 40px;
+  height: 40px;
+  margin: .7rem auto;
+  justify-content: center;
+  padding: 0;
+  border-top: 0;
+}
+
+.site-layout.sidebar-collapsed .side-foot .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+}
+
+.site-layout.sidebar-collapsed .side-foot .who,
+.site-layout.sidebar-collapsed .side-foot .icon-btn {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .site-layout:not(.sidebar-expanded) .chat-sidebar {
+    width: 72px;
+    flex-basis: 72px;
+  }
+  
+
+  .site-layout:not(.sidebar-expanded) .brand {
+    width: 40px;
+    height: 40px;
+    margin: .7rem auto .8rem;
+    padding: 0;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .site-layout:not(.sidebar-expanded) .brand .logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+  }
+
+  .site-layout:not(.sidebar-expanded) .brand .logo svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .site-layout:not(.sidebar-expanded) .brand-name,
+  .site-layout:not(.sidebar-expanded) .brand small,
+  .site-layout:not(.sidebar-expanded) .home,
+  .site-layout:not(.sidebar-expanded) .side-label,
+  .site-layout:not(.sidebar-expanded) .thread,
+  .site-layout:not(.sidebar-expanded) .who {
+    font-size: 0;
+  }
+
+  .site-layout:not(.sidebar-expanded) .home,
+  .site-layout:not(.sidebar-expanded) .thread {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .site-layout:not(.sidebar-expanded) .thread svg,
+  .site-layout:not(.sidebar-expanded) .home svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .site-layout:not(.sidebar-expanded) .sidebar-toggle {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .site-layout:not(.sidebar-expanded) .side-foot {
+    width: 40px;
+    height: 40px;
+    margin: .7rem auto;
+    justify-content: center;
+    padding: 0;
+    border-top: 0;
+  }
+
+  .site-layout:not(.sidebar-expanded) .side-foot .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+  }
+
+  .site-layout:not(.sidebar-expanded) .side-foot .who,
+  .site-layout:not(.sidebar-expanded) .side-foot .icon-btn {
+    display: none;
+  }
+
+  .site-layout.sidebar-expanded .chat-sidebar {
+    width: 264px;
+    flex-basis: 264px;
+    box-shadow: var(--shadow);
+  }
+}
+
+/* ---------- scrollbar ---------- */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+
+  border-radius: 20px;
+
+  border: 3px solid transparent;
+
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border);
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+</style>
+
+
+<div class="header-shell">
+
+<aside class="chat-sidebar">
+
+  <!-- BRAND -->
+  <div class="brand">
+
+    
+
+  <span class="logo">
+    <img class="academy-logo-image" src="{% static 'images/academy_logo.svg' %}" alt="{% trans 'Academy logo' %}">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 312" role="img" aria-labelledby="title">
+    <title id="title">{% trans 'Academy logo' %}</title>
+    <g fill="#1f76b4" fill-rule="evenodd">
+    <path d="M 9.50 209.00 L 10.00 207.50 L 14.00 207.50 L 20.00 209.50 L 29.00 209.50 L 30.00 210.50 L 48.00 210.50 L 49.00 209.50 L 58.00 209.50 L 59.00 208.50 L 69.00 207.50 L 97.00 198.50 L 99.00 196.50 L 101.00 196.50 L 119.00 187.50 L 135.00 177.50 L 156.00 161.50 L 183.50 135.00 L 209.50 102.00 L 229.50 69.00 L 229.00 64.50 L 205.00 55.50 L 204.50 54.00 L 261.00 23.50 L 270.00 17.50 L 276.00 15.50 L 287.00 8.50 L 297.00 3.50 L 300.50 4.00 L 297.50 44.00 L 296.50 45.00 L 296.50 56.00 L 295.50 57.00 L 295.50 64.00 L 294.50 65.00 L 294.50 78.00 L 292.50 86.00 L 292.50 98.00 L 291.50 99.00 L 291.50 108.00 L 290.00 113.50 L 270.00 94.50 L 268.00 94.50 L 261.50 105.00 L 238.50 134.00 L 206.00 165.50 L 192.00 176.50 L 171.00 190.50 L 157.00 198.50 L 155.00 198.50 L 132.00 209.50 L 111.00 216.50 L 107.00 216.50 L 103.00 218.50 L 99.00 218.50 L 93.00 220.50 L 77.00 221.50 L 76.00 222.50 L 58.00 222.50 L 57.00 221.50 L 47.00 221.50 L 46.00 220.50 L 32.00 218.50 L 20.00 214.50 Z"/>
+    <path d="M 27.50 203.00 L 26.50 197.00 L 24.50 194.00 L 24.50 189.00 L 22.50 185.00 L 22.50 177.00 L 21.50 176.00 L 21.50 168.00 L 20.50 167.00 L 20.50 154.00 L 21.50 153.00 L 22.50 135.00 L 24.50 130.00 L 24.50 125.00 L 27.50 117.00 L 27.50 114.00 L 33.50 99.00 L 46.50 75.00 L 60.50 57.00 L 76.00 42.50 L 93.00 30.50 L 110.00 21.50 L 130.00 14.50 L 148.00 11.50 L 149.00 10.50 L 164.00 10.50 L 165.00 9.50 L 190.00 10.50 L 220.00 18.50 L 230.00 22.50 L 236.50 27.00 L 233.00 31.50 L 227.00 34.50 L 223.00 34.50 L 203.00 26.50 L 199.00 26.50 L 194.00 24.50 L 188.00 24.50 L 187.00 23.50 L 159.00 22.50 L 158.00 23.50 L 144.00 24.50 L 139.00 26.50 L 135.00 26.50 L 128.00 29.50 L 125.00 29.50 L 120.00 32.50 L 115.00 33.50 L 113.00 35.50 L 109.00 36.50 L 92.00 46.50 L 82.00 54.50 L 62.50 75.00 L 51.50 92.00 L 49.50 98.00 L 47.50 100.00 L 47.50 102.00 L 40.50 117.00 L 35.50 138.00 L 35.50 143.00 L 34.50 144.00 L 34.50 175.00 L 35.50 176.00 L 35.50 181.00 L 38.50 191.00 L 38.50 195.00 L 40.50 199.00 L 40.50 204.00 L 38.00 205.50 L 31.00 205.50 Z"/>
+    <path d="M 63.50 200.00 L 63.50 95.00 L 65.00 93.50 L 83.00 94.50 L 84.50 93.00 L 85.00 74.50 L 106.00 75.50 L 119.00 78.50 L 136.00 84.50 L 153.00 94.50 L 167.00 108.50 L 170.00 108.50 L 182.00 96.50 L 194.00 88.50 L 204.00 83.50 L 211.00 81.50 L 212.50 82.00 L 212.50 85.00 L 208.50 92.00 L 203.00 97.50 L 193.00 102.50 L 178.50 116.00 L 174.50 124.00 L 174.50 134.00 L 166.00 143.50 L 163.50 143.00 L 163.50 124.00 L 162.50 121.00 L 157.50 114.00 L 146.00 103.50 L 140.00 99.50 L 123.00 91.50 L 104.00 86.50 L 97.00 86.50 L 95.50 88.00 L 95.50 191.00 L 90.00 194.50 L 84.50 195.00 L 84.50 107.00 L 83.00 105.50 L 76.00 105.50 L 75.50 194.00 L 73.00 199.50 L 65.00 201.50 Z"/>
+    <path d="M 281.00 253.50 L 279.50 250.00 L 279.50 245.00 L 280.50 244.00 L 279.50 237.00 L 295.50 206.00 L 296.50 201.00 L 298.50 198.00 L 298.50 194.00 L 302.50 179.00 L 302.50 167.00 L 303.50 166.00 L 302.50 140.00 L 300.50 135.00 L 300.50 130.00 L 298.50 122.00 L 296.50 118.00 L 298.50 95.00 L 301.00 94.50 L 307.50 108.00 L 312.50 123.00 L 312.50 129.00 L 314.50 134.00 L 315.50 146.00 L 316.50 147.00 L 315.50 179.00 L 312.50 191.00 L 312.50 196.00 L 305.50 217.00 L 303.50 219.00 L 303.50 221.00 L 298.50 231.00 L 290.50 244.00 Z"/>
+    <path d="M 64.50 252.00 L 63.50 250.00 L 63.50 230.00 L 70.00 229.50 L 71.00 228.50 L 74.00 228.50 L 75.50 230.00 L 75.50 240.00 L 79.00 241.50 L 102.00 242.50 L 108.00 244.50 L 114.00 244.50 L 118.00 246.50 L 123.00 246.50 L 130.00 249.50 L 133.00 249.50 L 136.00 251.50 L 139.50 251.00 L 139.50 249.00 L 133.00 244.50 L 116.00 236.50 L 109.00 235.50 L 105.00 233.50 L 84.50 231.00 L 84.50 229.00 L 86.00 227.50 L 109.00 223.50 L 123.00 227.50 L 140.00 235.50 L 154.00 245.50 L 161.00 252.50 L 163.00 252.50 L 163.50 202.00 L 170.00 197.50 L 173.00 197.50 L 174.50 200.00 L 175.00 252.50 L 177.00 252.50 L 185.00 244.50 L 205.00 231.50 L 207.00 231.50 L 217.00 226.50 L 220.00 226.50 L 223.00 224.50 L 241.00 221.50 L 241.50 144.00 L 243.50 137.00 L 251.00 129.50 L 252.50 130.00 L 252.50 144.00 L 253.50 145.00 L 253.50 179.00 L 252.50 180.00 L 252.50 212.00 L 253.50 213.00 L 253.50 222.00 L 252.50 223.00 L 252.50 231.00 L 233.00 233.50 L 225.00 236.50 L 222.00 236.50 L 219.00 238.50 L 216.00 238.50 L 214.00 240.50 L 212.00 240.50 L 201.00 246.50 L 196.50 250.00 L 196.50 252.00 L 199.00 252.50 L 214.00 246.50 L 219.00 246.50 L 223.00 244.50 L 229.00 244.50 L 234.00 242.50 L 258.00 241.50 L 261.00 240.50 L 262.50 239.00 L 262.50 114.00 L 269.00 105.50 L 272.50 106.00 L 273.50 108.00 L 273.50 251.00 L 272.00 252.50 L 249.00 252.50 L 248.00 253.50 L 237.00 253.50 L 226.00 256.50 L 221.00 256.50 L 211.00 260.50 L 199.00 263.50 L 175.00 277.50 L 165.00 278.50 L 136.00 262.50 L 127.00 260.50 L 117.00 256.50 L 113.00 256.50 L 102.00 253.50 Z"/>
+    <path d="M 57.00 253.50 L 55.00 253.50 L 46.50 243.00 L 38.50 230.00 L 39.00 226.50 L 50.00 227.50 L 53.00 228.50 L 55.50 231.00 L 57.50 235.00 Z"/>
+    <path d="M 276.50 261.00 L 264.00 273.50 L 242.00 289.50 L 224.00 298.50 L 207.00 304.50 L 203.00 304.50 L 194.00 307.50 L 180.00 308.50 L 179.00 309.50 L 158.00 309.50 L 157.00 308.50 L 149.00 308.50 L 134.00 304.50 L 130.00 304.50 L 116.00 299.50 L 103.00 293.50 L 101.00 291.50 L 99.00 291.50 L 76.00 275.50 L 63.50 264.00 L 61.50 259.00 L 77.00 258.50 L 92.00 271.50 L 118.00 286.50 L 129.00 290.50 L 132.00 290.50 L 135.00 292.50 L 139.00 292.50 L 143.00 294.50 L 154.00 295.50 L 155.00 296.50 L 182.00 296.50 L 183.00 295.50 L 190.00 295.50 L 199.00 292.50 L 203.00 292.50 L 206.00 290.50 L 209.00 290.50 L 224.00 284.50 L 226.00 282.50 L 237.00 277.50 L 262.00 258.50 L 276.00 258.50 Z"/>
+    </g></svg>
+  </span>
+
+
+
+
+
+
+    <small>v1.0</small>
+
+  </div>
+
+  <button class="sidebar-toggle" type="button" aria-label="{% trans 'Collapse sidebar' %}" aria-expanded="true" title="{% trans 'Collapse sidebar' %}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M15 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+
+
+  <!-- MAIN BUTTON -->
+  <button id="home_button" class="home">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M3 11l9-8 9 8"/>
+      <path d="M5 10v10h14V10"/>
+    </svg>
+      {% trans 'Home' %}
+
+  </button>
+
+
+  <!-- SECTION -->
+  <div class="side-label">
+    {% trans 'Navigation' %}
+  </div>
+
+
+  <!-- BUTTONS -->
+  <div class="threads">
+
+    <!-- EXAMPLE BUTTON 1 -->
+
+
+    <button id="Articles_button" class="thread">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M14 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z" />
+        <path d="M14 2v5h5" />
+        <path d="M9 13h6" />
+        <path d="M9 17h4" />
+      </svg>
+
+      {% trans 'Articles' %}
+
+
+    </button>
+
+    <button id="courses_button" class="thread">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 3h5a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H3z" />
+        <path d="M21 3h-5a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h6z" />
+      </svg>
+
+      {% trans 'Courses' %}
+
+    </button>
+    <button id="user_courses_button" class="thread">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round">
+
+        <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+        <path d="M6 12.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-3.5"/>
+        <path d="M22 10v6"/>
+    </svg>
+      {% trans 'My Courses' %}
+
+    </button>
+
+
+    <!-- EXAMPLE BUTTON 3 -->
+    <button id="profile" class="thread">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+      >
+        <circle
+          cx="12"
+          cy="8"
+          r="3"
+        />
+
+        <path
+          d="M5 21a7 7 0 0114 0"
+        />
+      </svg>
+
+      {% trans 'Profile' %}
+
+    </button>
+
+
+    <!-- EXAMPLE BUTTON 4 -->
+    <button id="Upgrade" class="thread">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M3 8l4 4 5-7 5 7 4-4-2 10H5z" />
+        <path d="M5 21h14" />
+      </svg>
+
+      {% trans 'Upgrade' %}
+
+    </button>
+
+
+
+
+
+                      <form method="post" action="{% url 'logout' %}">
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                  <path d="M16 17l5-5-5-5" />
+                                  <path d="M21 12H9" />
+                              </svg>
+                              {% trans 'Logout' %}
+                          </button>
+                      </form>
+  </div>
+
+
+  <!-- FOOTER -->
+
+</aside>
+
+<div class="header-nav">
+{% load i18n %}
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom" style="background-color: #00000000; ">
+    <div class="container">
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      {% if user.is_authenticated %}
+      
+        <div class="d-flex ms-auto align-items-center">
+            <div class="dropdown me-2">
+                <button
+                    class="btn btn-secondary dropdown-toggle header-original-button"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    {{ user.username }}
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="dropdownMenuButton">
+
+                    <li>
+                        <a class="dropdown-item d-flex align-items-center gap-2" href="{% url 'profile' %}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="3.5" />
+                                <path d="M5 21a7 7 0 0 1 14 0" />
+                            </svg>
+                            {% trans 'Profile' %}
+                        </a>
+                    </li>
+
+                    <li>
+                      <form method="post" action="{% url 'logout' %}">
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item d-flex align-items-center gap-2">
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                  <path d="M16 17l5-5-5-5" />
+                                  <path d="M21 12H9" />
+                              </svg>
+                              {% trans 'Logout' %}
+                          </button>
+                      </form>
+                    </li>
+
+                    <li>
+                          <p><a href="{% url 'change_password' %}" style="color: #0066B3;">{% trans 'Change Password' %}</a></p>
+                    </li>
+
+                    <li>
+                    
+                        
+                      <p><a href="{% url 'forgot_password' %}" style="color: #0066B3;">{% trans 'Forgot Password' %}</a></p>
+
+                    </li>
+
+                </ul>
+            </div>
+
+            
+        </div>
+        
+
+
+
+                
+      {% else %}
+
+      <a href="{% url 'Register' %}" class="btn auth-button">
+        {% trans 'logup' %}
+      </a>
+
+      <a href="{% url 'login_form' %}" class="btn auth-button ms-2">
+        {% trans 'login' %}
+      </a>
+
+      {% endif %}
+
+      <form class="ms-2" action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+
+          <input name="next" type="hidden" value="{{ redirect_to }}">
+
+          <select name="language" onchange="this.form.submit()">
+              {% get_current_language as LANGUAGE_CODE %}
+              {% get_available_languages as LANGUAGES %}
+              {% get_language_info_list for LANGUAGES as languages %}
+
+              {% for language in languages %}
+                  <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                      {{ language.name_local }}
+                  </option>
+              {% endfor %}
+          </select>
+      </form>
+
+        <style>
+          .flip-horizontal {
+            display: inline-block;
+            transform: scaleX(-1);
+          }
+        </style>
+        
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
+        {% include 'partials/header_search.html' %}
+        <ul class="navbar-nav my-2 my-lg-0">
+          <a class="navbar-brand" href="/"><img src="{% static 'images/logo.jpeg' %}"alt="Logo"class="logo-image"style="width: 60px; height: 60px; margin-right: 10px;"></a>
+            
+          <li class="nav-item">
+            
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+<nav class="navbar navbar-expand-lg navbar-light category-navbar">
+    <div class="container">
+      <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
+        <ul class="navbar-nav my-2 my-lg-0">
+          {% for category in categories %}
+              <li class="nav-item">
+                <a class="nav-link black-color mx-1" href="{% url 'academy.category' category.id %}" role="button">
+                  {{ category.name }}
+                </a>
+              </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const layout = document.querySelector('.site-layout');
+    const toggle = document.querySelector('.sidebar-toggle');
+
+    if (!layout || !toggle) {
+      return;
+    }
+
+    const compactQuery = window.matchMedia('(max-width: 600px)');
+
+    function updateSidebarState(collapsed) {
+      layout.classList.toggle('sidebar-collapsed', collapsed);
+      layout.classList.toggle('sidebar-expanded', compactQuery.matches && !collapsed);
+      toggle.setAttribute('aria-expanded', String(!collapsed));
+      toggle.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      toggle.setAttribute('title', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+      toggle.querySelector('path').setAttribute('d', collapsed ? 'M9 6l6 6-6 6' : 'M15 6l-6 6 6 6');
+
+      // Lock page scroll while the drawer is open on phones
+      document.body.style.overflow =
+        (compactQuery.matches && !collapsed) ? 'hidden' : '';
+    }
+
+    compactQuery.addEventListener('change', function (event) {
+      updateSidebarState(event.matches);
+    });
+
+    updateSidebarState(compactQuery.matches);
+
+    toggle.addEventListener('click', function () {
+      const collapsed = layout.classList.contains('sidebar-collapsed');
+      updateSidebarState(!collapsed);
+    });
+
+    const openBtn = document.querySelector('.sidebar-open-btn');
+    const backdrop = document.querySelector('.sidebar-backdrop');
+
+    if (openBtn) {
+      openBtn.addEventListener('click', function () {
+        updateSidebarState(false);
+      });
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function () {
+        updateSidebarState(true);
+      });
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && layout.classList.contains('sidebar-expanded')) {
+        updateSidebarState(true);
+      }
+    });
+  });
+  const homeButton = document.getElementById('home_button');
+  homeButton.addEventListener('click', function() {
+      window.location.href = '/';
+  });
+  const coursesButton = document.getElementById('courses_button');
+  coursesButton.addEventListener('click', function() {
+      window.location.href = '/categories/';
+  });
+
+
+  const Articles_button = document.getElementById('Articles_button');
+  Articles_button.addEventListener('click', function() {
+      window.location.href = '/articles/articles/';
+  });
+  const user_courses_button = document.getElementById('user_courses_button');
+  user_courses_button.addEventListener('click', function() {
+      window.location.href = '/mycourses/';
+  });
+  const profileButton = document.getElementById('profile');
+  if (profileButton) {
+    profileButton.addEventListener('click', function() {
+      window.location.href = "{% url 'profile' %}";
+    });}
+
+  const UpgradeButton = document.getElementById('Upgrade');
+  if (UpgradeButton) {
+    UpgradeButton.addEventListener('click', function() {
+      window.location.href = "{% url 'academy.upgrade' %}";
+    });
+  }
+
+</script>

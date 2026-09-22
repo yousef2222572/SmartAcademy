@@ -1,0 +1,587 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+<div class="container py-5" >
+
+    <div class="row justify-content-center">
+
+        <div class="card register-card col-12 col-sm-10 col-md-7 col-lg-5 p-0">
+
+
+            <div class="card-header bt-color text-center">
+
+                <h3 class="mb-0">
+                    {% trans 'register' %}
+                </h3>
+
+                <p class="subtitle">
+                    {% trans 'Create a new account' %}
+                </p>
+
+            </div>
+
+
+
+            <div class="card-body p-4">
+
+
+                <form method="post" id="registerForm">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-area">
+
+                        {% for field in form %}
+
+                            <div class="mb-3 field-container">
+
+                                {{ field.label }}
+
+                                {{ field }}
+
+                                <div 
+                                    class="field-error"
+                                    id="{{ field.name }}-error">
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+
+                    <div class="otp-section">
+
+
+                        <div class="otp-input">
+
+                            <label>
+                                {% trans 'Verification code' %}
+                            </label>
+
+                            <input 
+                                type="text"
+                                class="form-control"
+                                id="code"
+                                name="code"
+                                maxlength="6"
+                                inputmode="numeric"
+                                placeholder="{% trans 'Enter the verification code' %}"
+                                disabled
+                            >
+
+                        </div>
+
+
+
+                        <button 
+                            type="button"
+                            id="sendCodeBtn"
+                            class="btn send-btn">
+
+                            {% trans 'Send code' %}
+                        </button>
+
+
+                    </div>
+
+
+
+                    <div id="message"></div>
+
+
+
+
+                    <button 
+                        class="btn btn-primary bt-color mt-4"
+                        id="register_btn"
+                        type="submit">
+
+                        {% trans 'Create account' %}
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+const form = document.getElementById("registerForm");
+const send_button = document.getElementById("sendCodeBtn");
+const message = document.getElementById("message");
+
+send_button.addEventListener("click", async (e) => {
+
+    e.preventDefault();
+
+
+    // clear the old errors
+    document.querySelectorAll(".field-error").forEach(error => {
+        error.innerHTML = "";
+        error.classList.remove("show");
+    });
+
+
+    // prevent submitting if HTML validation failed
+    if (!form.checkValidity()) {
+
+        form.reportValidity();
+
+        return;
+    }
+
+
+    const formData = new FormData(form);
+
+
+    const response = await fetch("{% url 'otpcode' %}", {
+
+        method: "POST",
+        body: formData
+
+    });
+
+
+    const data = await response.json();
+
+
+
+    if (data.status === "successfully") {
+
+
+        message.innerHTML = data.message;
+        message.style.color = "green";
+
+
+        document.getElementById("code").disabled = false;
+
+
+        startCountdown(120);
+
+
+        notyf.success({
+
+            message: data.message,
+            duration: 10000,
+            dismissible: true,
+            icon: false
+
+        });
+
+
+    }
+
+
+    else if (data.status === "error") {
+
+
+        // map Django errors onto the fields
+
+        if (data.errors) {
+
+
+            for (const field in data.errors) {
+
+
+                const errorBox = document.getElementById(
+                    `${field}-error`
+                );
+
+
+                if (errorBox) {
+
+
+                    errorBox.innerHTML = data.errors[field][0];
+
+                    errorBox.classList.add("show");
+
+
+                }
+
+
+            }
+
+
+        }
+
+
+        notyf.error({
+
+            message: "{% trans 'Please fix the errors' %}",
+            duration: 10000,
+            dismissible: true,
+            icon: false
+
+        });
+
+
+    }
+
+});
+
+
+function startCountdown(seconds) {
+
+    send_button.disabled = true;
+
+    let timeLeft = seconds;
+
+    updateButton();
+
+    const timer = setInterval(() => {
+
+        timeLeft--;
+
+        updateButton();
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+
+            send_button.disabled = false;
+            send_button.textContent = "{% trans 'Send code' %}";
+        }
+
+    }, 1000);
+
+
+    function updateButton() {
+
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        send_button.textContent =
+            `{% trans 'Resend' %} (${minutes}:${String(seconds).padStart(2, "0")})`;
+    }
+}
+        
+</script>
+
+<style>
+.field-error {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+    min-height: 18px;
+    transition: 0.3s;
+}
+
+.field-error.show {
+    animation: shake 0.3s;
+}
+
+
+@keyframes shake {
+
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    50% {
+        transform: translateX(5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+}
+
+
+
+
+
+.register-card {
+
+
+    border-radius:20px;
+    border:none;
+    overflow:hidden;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.12);
+
+    background:#fff;
+
+}
+
+
+
+
+.card-header {
+
+
+    background:#fff;
+
+    padding:25px;
+
+    border-bottom:1px solid #eee;
+
+}
+
+
+
+.card-header h3 {
+
+
+    font-weight:800;
+
+}
+
+
+
+.subtitle {
+
+
+    margin-top:10px;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
+
+
+.form-area p {
+
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    margin-bottom:18px;
+
+}
+
+
+
+.form-area label {
+
+
+    font-weight:600;
+
+    color:#333;
+
+}
+
+
+
+
+
+.form-control {
+
+
+    height:55px;
+
+    border-radius:14px;
+
+    border:1px solid #ddd;
+
+    padding:0 15px;
+
+    font-size:16px;
+
+}
+
+
+
+.form-control:focus {
+
+
+    border-color:#ff9800;
+
+    box-shadow:
+    0 0 0 .2rem rgba(255,152,0,.15);
+
+}
+
+
+
+
+
+.otp-section {
+
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:end;
+
+    margin-top:25px;
+
+}
+
+
+
+
+
+.otp-input {
+
+
+    flex:1;
+
+}
+
+
+
+.otp-input label {
+
+
+    display:block;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+
+}
+
+
+
+
+
+.send-btn {
+
+
+    height:55px;
+
+    padding:0 25px;
+
+    border-radius:14px;
+
+    background:#0066B3;
+
+    color:white;
+
+    font-weight:bold;
+
+    white-space:nowrap;
+
+    border:none;
+
+}
+
+
+
+.send-btn:hover,
+.send-btn:focus {
+
+
+    background:#00518f;
+
+    border-color:#00518f;
+
+}
+
+
+
+
+
+#message {
+
+
+    margin-top:15px;
+
+    font-weight:600;
+
+    text-align:center;
+
+}
+
+
+
+
+
+
+
+
+/* mobile */
+
+@media(max-width:576px){
+
+
+
+    .container {
+
+
+        padding-top:20px!important;
+
+        padding-bottom:20px!important;
+
+    }
+
+
+
+    .card-body {
+
+
+        padding:20px!important;
+
+    }
+
+
+
+
+    .otp-section {
+
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+
+
+    .send-btn {
+
+
+        width:100%;
+
+    }
+
+
+
+    .register-card {
+
+
+        border-radius:15px;
+
+    }
+
+
+
+}
+
+
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+{% endblock %}

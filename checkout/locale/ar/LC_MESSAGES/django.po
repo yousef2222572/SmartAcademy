@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-21 18:29+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: checkout/forms.py:28
+msgid "Pay Now"
+msgstr "ادفع الآن"
+
+#: checkout/models.py:10
+msgid "Pending"
+msgstr "قيد الانتظار"
+
+#: checkout/models.py:11
+msgid "delivery"
+msgstr ""
+
+#: checkout/models.py:12
+msgid "Completed"
+msgstr "مكتمل"
+
+#: checkout/models.py:18
+msgid "Stripe"
+msgstr "سترايب"
+
+#: checkout/models.py:19
+msgid "Paypal"
+msgstr "باي بال"
+
+#: checkout/models.py:20
+msgid "Cash"
+msgstr ""
+
+#: checkout/views.py:110 checkout/views.py:138
+#, fuzzy
+#| msgid "Please enter valid information."
+msgid "please enter a valid information."
+msgstr "يرجى إدخال معلومات صحيحة."

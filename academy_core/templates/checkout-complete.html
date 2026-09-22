@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="container my-5">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="text-center">
+            <i class="lni lni-checkmark-circle text-muted display-1"></i>
+          </h1>
+          <p class="text-center mt-4">
+            {% trans "Your purchase was completed successfully, an email with the download links for the books you ordered is on its way!" %}
+          </p>
+          <p class="text-center">
+            <a href="/" class="btn btn-primary">{% trans "Back to home page" %}</a>
+          </p>
+        </div>
+      </div>
+    </div>
+{% endblock %}

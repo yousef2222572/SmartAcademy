@@ -1,0 +1,94 @@
+  {% extends 'base.html' %}
+  {% load i18n %}
+
+  {% block content %}
+
+      <div class="container my-5">
+        <section>
+          <div class="row">
+
+            <div class="col-md-9">
+              <div class="row">
+
+            <h4 class="fw-bold bt-color" style="border-radius: 20px;"> {% trans "Your purchased courses" %} </h4>
+
+                  {% for course in own_courses %}
+                    <div class="col-6 col-md-3">
+
+
+                      {% include 'common/course_card_show.html' with course=course %}
+                    </div>
+                  {% empty %}
+                      <div class="card mb-4">
+                          <div class="card-body py-5">
+                              <h5 class="card-title text-center">
+                                  {% trans 'We were not able to find any book.' %}
+                              </h5>
+                          </div>
+                      </div>
+                  {% endfor %}
+              </div>
+                {% if page_obj.paginator.count > 0 %}
+                  <nav>
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                          <li>
+                            <a class="page-link" href="{% if category %}{% url 'academy.category' category.id %}{% else %}{% url 'academy.category' %}{% endif %}?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&amp;query={{ request.GET.query }}{% endif %}">{% trans 'Previous' %}</a>
+                          </li>
+                        {% else %}
+                          <li class="disabled">
+                            <span class="page-link" aria-disabled="true">{% trans 'Previous' %}</span>
+                          </li>
+                        {% endif %}
+                        {% if page_obj.has_next %}
+                          <li>
+                            <a class="page-link" href="{% if category %}{% url 'academy.category' category.id %}{% else %}{% url 'academy.category' %}{% endif %}?page={{ page_obj.next_page_number }}{% if request.GET.query %}&amp;query={{ request.GET.query }}{% endif %}">{% trans 'Next' %}</a>
+                          </li>
+                        {% else %}
+                          <li class="disabled">
+                            <span class="page-link" aria-disabled="true">{% trans 'Next' %}</span>
+                          </li>
+                        {% endif %}
+                    </ul>
+                  </nav>
+                {% endif %}
+            </div>
+            <h4 class="fw-bold bt-color"  style="border-radius: 20px;"> {% trans "Your subscription-based courses" %} </h4>
+                        <div class="row g-4">
+
+                  {% for course in temporary_courses %}
+
+                      <div class="col-6 col-md-4 col-lg-3">
+                          {% include 'common/course_card_show.html' with course=course %}
+                      </div>
+
+                  {% empty %}
+
+                      <div class="col-12">
+                          <div class="card border-0 shadow-sm">
+                              <div class="card-body text-center py-5">
+
+                                  <h5 class="fw-semibold mb-2">
+                                      {% trans "No subscription courses available" %}
+                                  </h5>
+
+                                  <p class="text-muted mb-0">
+                                      {% trans "There are currently no courses available for your subscription." %}
+                                  </p>
+
+                              </div>
+                          </div>
+                      </div>
+
+                  {% endfor %}
+
+              </div>
+              
+          </div>
+        </section>
+      </div>
+
+  <style>
+
+  </style>
+  {% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+
+<div class="conteinar">
+    <div class="row justify-content-md-center">
+        <div class="card col-md-6 px-0">
+            <div class="card-header">
+                <h3 class="mb-0 py-2">
+                    {% trans 'Profile' %}
+
+                </h3>
+
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <p>{{ field.label_tag }}{{ field }}</p>
+                    {% endfor %}
+
+                    
+                        
+                    <p><a href="{% url 'change_password' %}" style="color: #0066B3;">{% trans 'Change Password' %}</a></p>
+                    <p><a href="{% url 'forgot_password' %}" style="color: #0066B3;">{% trans 'Forgot Password' %}</a></p>
+
+
+
+                    <hr>
+                    
+                    <button class="btn btn-success btn-block bt-color" id="register_btn" type="submit">
+                        {% trans 'Save' %}
+                    </button>
+                    
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
