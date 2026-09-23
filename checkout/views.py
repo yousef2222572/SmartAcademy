@@ -61,6 +61,7 @@ def make_transaction(request,pm,course_id):
     
     form = UserInfoForm(request.POST)
 
+
     if form.is_valid():
 
         course = academy_models.Courses.objects.filter(pk=course_id).first()
@@ -95,13 +96,14 @@ def make_transaction(request,pm,course_id):
 def stripe_config(request):
     #  هذا المفتاح لست بحاجة ل تشفيره بما انه مفتاح عام 
     return JsonResponse({
-        'public_key' : "i removed"
+        'public_key' : "your-code"
     })
 
 
 def stripe_transaction(request):
-    stripe.api_key = "i remove"
-    course_id = '18'
+    stripe.api_key = "your-code"
+    course_id=request.POST.get('course_id')
+
     account = stripe.Account.retrieve()
     print("Django Stripe account:", account.id)
     transaction = make_transaction(request,PaymentMethod.Stripe,course_id)
@@ -110,7 +112,7 @@ def stripe_transaction(request):
             'message' : _("please enter a valid information.")
         },status=400)
         
-    stripe.api_key = "i remove"
+    stripe.api_key = "your-code"
     
     intent = stripe.PaymentIntent.create(
         amount=transaction.amount * 100,

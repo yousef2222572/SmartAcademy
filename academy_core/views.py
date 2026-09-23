@@ -134,24 +134,37 @@ def user_courses(request):
 
 
 
-# def course_view (request):
 
+@login_required
 def course_show(request, course_id):
     course=models.Courses.objects.filter(id=course_id).first()
-    Tracks=models.Tracks.objects.filter(course=course)
+    if course:
+        permissions, created = models.UserPermissions.objects.get_or_create(
+            user=request.user
+        )
+        course_id = course.id
+
+        if course_id in permissions.own_books or permissions.plan_type in [1, 2]:
+            Tracks=models.Tracks.objects.filter(course=course)
+            
+
+
+
     
-    context = {'course': course,"tracks":Tracks}
+            context = {'course': course,"tracks":Tracks}
 
-    return render(request, 'course_show.html', context)
+            return render(request, 'course_show.html', context)
 
-    
-# def course_show(request, lesson_id):
+        
+        else:
+            
+            user_info=request.user
+            
+            return render(request, 'checkout.html',{'user_info':user_info,'course_id':course_id})
+        
+    return 403
 
-#     lesson=models.Tracks.objects.filter(track_id=lesson_id).first()
-    
-#     context = {'lesson': lesson}
 
-#     return render(request, 'lesson.html', context)
 
 @login_required
 def lesson(request, lesson_id):
@@ -173,8 +186,17 @@ def lesson(request, lesson_id):
             conversation = ai_models.Conversation.objects.filter(lesson=lesson).first()
             messages = ai_models.Message.objects.filter(conversation=conversation).all()
     
-    context = {'lesson': lesson, 'questions': questions, 'messages': messages}
-    return render(request, 'lesson.html', context)
+            context = {'lesson': lesson, 'questions': questions, 'messages': messages}
+            return render(request, 'lesson.html', context)
+        
+        else:
+            
+            user_info=request.user
+            
+            return render(request, 'checkout.html',{'user_info':user_info,'course_id':course_id})
+        
+    return 403
+
 
 def messages(request):
     
@@ -262,12 +284,13 @@ def messages(request):
 
 def checkout(request,course_id):
 
+    course=models.Courses.objects.filter(id=course_id).first()
+    
 
     user_info=request.user
     return render(
-        request, 'checkout.html',{'user_info':user_info,'course_id':course_id}
+        request, 'checkout.html',{'user_info':user_info,'course': course}
     )
-
 
 
 
@@ -277,7 +300,7 @@ def subscribe(request, plan):
 
     print('arrive')
     if plan == "pro":
-        price_id = "pri_01m2vm34x5k72g13nx4e40zhc7"
+        price_id = "your-code"
         print('done')
 
     else:
@@ -288,9 +311,8 @@ def subscribe(request, plan):
         'user_id':user_id,
         "plan": plan,
         "price_id": price_id,
-        "paddle_client_token": 'test_0f53b608fd344671e04ddea1a3e',
+        "paddle_client_token": 'your-code',
     })
-    
     
     
     

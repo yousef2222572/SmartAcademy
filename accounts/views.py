@@ -106,7 +106,7 @@ def send_otp_email(from_email:str,to_email: str, code: str) -> bool:
 
     headers = {
         "accept": "application/json",
-        "api-key": "my key i remove it ",
+        "api-key": "your-code",
         "content-type": "application/json",
     }
     payload = {

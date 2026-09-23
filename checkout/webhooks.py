@@ -25,7 +25,7 @@ def stripe_webhook(request):
 
     try:
         event = stripe.Webhook.construct_event(
-            payload, sig_header, "i removed"
+            payload, sig_header, "your-code"
         )
     except ValueError as e:
         print('Invalid payload')
@@ -53,13 +53,13 @@ def add_permession(transaction_id):
     transaction = models.Transaction.objects.get(pk=transaction_id)
 
     order = Order.objects.create(transaction=transaction)
-    course = academy_models.Courses.objects.filter(pk__in=transaction.items).first()
+    course = academy_models.Courses.objects.filter(pk=transaction.items).first()
     transaction.status = models.TransactionStatus.Completed
     transaction.save()
 
     
 
-    permission, _ = academy_models.UserPermissions.objects.get_or_create(
+    permission = academy_models.UserPermissions.objects.get(
         user=transaction.user
     )
 
@@ -89,7 +89,7 @@ def add_permession(transaction_id):
 
     headers = {
         "accept": "application/json",
-        "api-key": "i removed the key",
+        "api-key": "your-code",
 
         "content-type": "application/json",
     }
